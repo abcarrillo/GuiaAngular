@@ -1,0 +1,397 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Guion para una aplicación Angular</title>
+
+    <style>
+        body {
+            font-family: arial, sans-serif;
+            font-size: 14px;
+        }
+
+        li {
+            margin-bottom : 5px;
+        }
+
+        .table_top {
+            overflow: hidden;
+            background-color: #EEE;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        td {
+            text-align: center;
+            font-size: 16pt;
+        }
+
+        #td_mark {
+            font-size: 18pt;
+            font-weight: bold;
+        }
+    </style>
+<link rel="stylesheet" type="text/css" href="http://www3.gobiernodecanarias.org/educacion/cau_ce/cookies/cookieconsent.min.css"/><script  type="text/javascript" src="http://www3.gobiernodecanarias.org/educacion/cau_ce/cookies/cookieconsent.min.js"></script><script type="text/javascript" src="http://www3.gobiernodecanarias.org/educacion/cau_ce/cookies/cauce_cookie.js"></script><script type="text/javascript" src="http://www3.gobiernodecanarias.org/educacion/cau_ce/estadisticasweb/scripts/piwik-base.js"></script><script type="text/javascript" src="http://www3.gobiernodecanarias.org/educacion/cau_ce/estadisticasweb/scripts/piwik-eforma.js"></script></head>
+
+<body>
+
+    <table id="table_stats" class="table_top">
+        <thead>
+            <tr>
+                <th>Nota</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="td_mark">0.00</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h1>Guion para una aplicación genérica</h1>
+    <ul><br />
+        <li><strong>Arrancar servidor</strong> de pruebas y abrir navegador con web: <code>ng serve -o</code></li>
+        <li><strong>Probar el comando</strong> ANTES de ejecutarlo: añadir <strong><code>-d</code></strong></li>
+        <li>Crear <strong>proyecto</strong>: <code>ng new nombre_proyecto</code></li>
+        <li>Crear <strong>módulo</strong>: <code>ng g m nombre_modulo</code></li>
+        <ul>
+            <li>Importar el nuevo módulo en el módulo raíz (<code>app.module.ts</code>): <code>--module=app</code></li>
+            <li>Crear el módulo de routing dentro del nuevo módulo creado (<code>nombre_modulo/nombre_modulo-routing.module.ts</code>): <code>--routing</code></li>
+            <li>Añadir la ruta de acceso en el módulo de routing (<code>app-routing.module.ts</code>) como <i>Lazy Loading</i>: <code>--route ruta_acceso</code></li>
+        </ul>
+        <li>Crear <strong>componente</strong> (CON directorio propio): <code>ng g c nombre_componente</code></li>
+        <li>Crear <strong>componente</strong> (SIN directorio propio): <code>ng g c nombre_componente --flat</code></li>
+        <li>Crear <strong>modelo</strong>: <code>ng g class ruta/nombre_modelo --type=model</code></li>
+        <li>Crear <strong>mock</strong>: <code>ng g class ruta/nombre_mock --type=mock</code></li>
+        <li>Crear <strong>servicio</strong>: <code>ng g service ruta/nombre_servicio</code></li>
+        <li>Crear <strong>pipe</strong>: <code>ng g pipe ruta/nombre_pipe</code></li>
+        <li>Crear <strong>directiva</strong>: <code>ng g directive ruta/nombre_directiva</code></li>
+        <li>Instalar <strong>Material</strong>: <code>ng add @angular/material</code></li>
+        <li>Actualizar Angular y Material: <code>ng update @angular/cli @angular/core @angular/material</code></li>
+    </ul><br />
+
+    <h2>Configuración</h2>
+    <label for="name">Nombre: </label>
+    <input type="text" name="name" id="name">
+    <button type="button" onclick="build_content(document.getElementById('name').value);">Asignar nombre</button>
+    <div id="content"></div>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h4>Enlaces:</h4>
+    <ol>
+        <li>Angular: <a href="https://next.angular.io/">https://next.angular.io/</a>
+        </li>
+        <li>Material: <a href="https://material.angular.io/">https://material.angular.io/</a>
+        </li>
+        <li>Fontawesome en Angular: <a href="https://fontawesome.com/how-to-use/on-the-web/using-with/angular">https://fontawesome.com/how-to-use/on-the-web/using-with/angular</a>
+        </li>
+    </ol>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <script>
+        //window.onload = function () {
+            
+        //}
+
+            let marks_shown = false;
+
+            const QUESTIONS = new Map(Object.entries({
+
+                'Inicialización del proyecto': [
+                    'Si no estaba creado el proyecto, crearlo (escoger SÍ al "default routing" y seleccionar SCSS)',
+                    'Ir al directorio src/app',
+                    'Crear el módulo "XXXXX.module.ts"',
+                    'Importar en el módulo raíz (app.module.ts) el módulo "XXXXX.module.ts"',
+                    'Ir al directorio del módulo "XXXXX"',  
+                    'Crear el componente principal "XXXXX.component.ts" dentro del módulo "XXXXX"',
+                    'Exportar el componente principal "XXXXX.component.ts" en el módulo "XXXXX.module.ts"',
+                    'Añadir en la plantilla del componente raíz (app.component.html) la etiqueta del componente principal "<app-XXXXX></app-XXXXX>"'
+                ],
+
+                'crud: Lista': [
+                    'Crear el componente "XXXXXList"',
+                    'Crear el modelo "XXXXX.model.ts"',
+                    'Crear el mock "XXXXX.mock.ts" con un array de elementos de prueba',
+                    'Modificar el código de "XXXXX-list".component.ts para que obtenga los datos de prueba desde el mock',
+                    'Añadir la etiqueta del componente "<app-XXXXX-list></app-XXXXX-list>" en la plantilla del componente principal "XXXXX.component.html"',
+                    'Cambiar la plantilla de "XXXXX-list.component.html" para que muestre la lista de XXXXX',
+                    'Añadir estilos para mostrar la lista de forma adecuada'
+                ],
+
+                'cRud: Detalle (Read: lectura)': [
+                    'Crear el componente "XXXXXDetails"',
+                    'Añadir en el código del componente "XXXXXDetails" una propiedad de entrada donde recibirá el elemento seleccionado a mostrar',
+                    'Cambiar la plantilla de "XXXXXDetails" para que muestre los datos del elemento seleccionado (controlar que el elemento puede estar vacío)',
+                    'Añadir en la plantilla de "XXXXXList" el evento para capturar el elemento seleccionado cuando el usuario pulse sobre él',
+                    'Añadir en el código del componente "XXXXXList" el método necesario para obtener el elemento seleccionado',  
+                    'Añadir la etiqueta del componente "XXXXXDetails" o bien dentro de la plantilla "XXXXXList" (hijo de la lista) o bien en la plantilla del componente principal "XXXXX" (hermano de la lista)',
+                    'Modificar la etiqueta del componente "XXXXXDetails" para que reciba el componente seleccionado en la lista',
+                    'Añadir estilos para mostrar el detalle de forma adecuada'
+                ],
+
+                'cRUd: Edición (Update: actualización)': [
+                    'Crear el componente "XXXXXEdit"',
+                    'Añadir en el código del componente "XXXXXEdit" una propiedad de entrada donde recibirá el elemento a editar',
+                    'Elegir si se desea usar formularios "template-driven" (opción A) o "reactivos" (opción B)',
+                    '(A) Importar en el módulo principal "XXXXX" los formularios "FormsModule"',
+                    '(A) Añadir los campos del formulario en la plantilla de "XXXXXEdit" según los atributos del modelo',
+                    '(A) Para cada atributo, establecer el enlace (binding) entre el campo y el modelo, la clase adecuada, etc.',
+                    '(A) Añadir en la plantilla validadores y mensajes de error según proceda',
+                    '(B) Importar en el módulo principal "XXXXX" los formularios "ReactiveFormsModule"',
+                    '(B) En el código del componente "XXXXXEdit" definir un método para inicializar un FormGroup con un FormControl por cada atributo del modelo a modificar',
+                    '(B) En el código del componente "XXXXXEdit" declarar un nuevo atributo para el formulario de tipo FormGroup e inicializarlo con el método anterior',
+                    '(B) Al definir los FormControl en el código del componente "XXXXXEdit", añadir valores por defecto, validadores, etc.',
+                    '(B) En el código del componente "XXXXXEdit" definir un método para procesar el submit',
+                    '(B) En la plantilla de "XXXXXEdit" añadir el formulario con sus campos',
+                    '(B) Modificar la plantilla de "XXXXXEdit" para enlazar el formulario, cada campo y el botón de envío con el código del componente',
+                    '(B) Modificar la plantilla de "XXXXXEdit" para mostrar avisos y mensajes de error',
+                    '(B) Añadir en el código del componente "XXXXXEdit" una propiedad de salida para enviar el elemento modificado como EventEmitter',
+                    'Modificar la plantilla de "XXXXXList" para incluir el enlace o botón para editar el elemento indicado"', 
+                    'Añadir en el código del componente "XXXXXList" el método necesario para capturar el elemento a editar',  
+                    'Añadir la etiqueta del componente "XXXXXEdit" o bien dentro de la plantilla "XXXXXList" (hijo de la lista) o bien en la plantilla del componente principal "XXXXX" (hermano de la lista)',
+                    'Modificar la etiqueta del componente "XXXXXEdit" para que reciba el componente seleccionado en la lista',
+                    'Añadir estilos para mostrar la edición de forma adecuada'
+                ],
+
+                'CRUd: Nuevo (Create: creación)': [
+                    'Crear el componente "XXXXXNew"',
+                    'Añadir en el código del componente "XXXXXNew" una propiedad de salida donde enviará el nuevo elemento creado a la lista',
+                    'Elegir si se desea usar formularios "template-driven" (opción A) o "reactivos" (opción B)',
+                    '(A) Importar en el módulo principal "XXXXX" los formularios "FormsModule"',
+                    '(A) Añadir los campos del formulario en la plantilla de "XXXXXNew" según los atributos del modelo',
+                    '(A) Para cada atributo, establecer el enlace (binding) entre el campo y el modelo, la clase adecuada, etc.',
+                    '(A) Añadir en la plantilla validadores y mensajes de error según proceda',
+                    '(B) Importar en el módulo principal "XXXXX" los formularios "ReactiveFormsModule"',
+                    '(B) En el código del componente "XXXXXNew" definir un método para inicializar un FormGroup con un FormControl por cada atributo del modelo a modificar',
+                    '(B) En el código del componente "XXXXXNew" declarar un nuevo atributo para el formulario de tipo FormGroup e inicializarlo con el método anterior',
+                    '(B) Al definir los FormControl en el código del componente "XXXXXNew", añadir valores por defecto, validadores, etc.',
+                    '(B) En el código del componente "XXXXXNew" definir un método para procesar el submit',
+                    '(B) En la plantilla de "XXXXXNew" añadir el formulario con sus campos',
+                    '(B) Modificar la plantilla de "XXXXXNew" para enlazar el formulario, cada campo y el botón de envío con el código del componente',
+                    '(B) Modificar la plantilla de "XXXXXNew" para mostrar avisos y mensajes de error',
+                    'Añadir en el código del componente "XXXXXNew" una propiedad de salida para enviar el elemento creado como EventEmitter', 
+                    'Después de enviar el nuevo elemento, añadir en el componente "XXXXXNew" el código para inicializar un nuevo elemento vacío (para limpiar los valores anteriores)',
+                    'Añadir en el código del componente "XXXXXList" el método necesario para obtener el nuevo elemento creado y añadirlo a la lista de elementos',  
+                    'Añadir la etiqueta del componente "XXXXXNew" o bien dentro de la plantilla "XXXXXList" (hijo de la lista) o bien en la plantilla del componente principal "XXXXX" (hermano de la lista)',
+                    'Modificar la etiqueta del componente "XXXXXNew" para que envíe al padre el nuevo elemento creado',
+                    'Añadir estilos para mostrar la creación de forma adecuada'
+                ],
+
+
+                'CRUD: Eliminacion (Delete: borrar)': [
+                    'Añadir en la plantilla de "XXXXXList" un enlace o botón para que el usuario indique qué elemento quiere eliminar',
+                    'Añadir en el código del componente "XXXXXList" el método necesario para obtener el elemento a eliminar y quitarlo de la lista',  
+                    'Añadir pregunta de comprobación antes de eliminar el elemento'
+                ],
+
+
+                'Material': [
+                    'Instalar material (escoger uno de los temas por defecto e instalar HammerJS y animaciones)',
+                    'Añadir en index.html el link al CSS de bootstrap-grid',
+                    'Editar las plantillas para añadir el grid de bootstrap',
+                    'Añadir fontawesome (si fuese necesario)',
+                    'Utilizar la web de material para ir añadiendo elementos de material en las plantillas',
+                    'Para cada elemento de material añadido, si es la primera vez que se usa, importar el módulo "MatYYYYModule" en el módulo de "XXXXX"'
+                ]
+              
+            }));
+
+            // Distintas opciones para elegir en cada pregunta. 
+            // Para cada opción se almacena el color, el número 
+            // de veces que se ha seleccionado y la nota relativa
+            class markOptions {
+                constructor(title, color, number, mark) {
+                    this.title = title;
+                    this.color = color;
+                    this.number = number;
+                    this.mark = mark;
+                }
+            }
+
+            // Se rellenan las opciones
+            const OPTIONS = new Map(Object.entries({
+                'empty': new markOptions('Pendiente', 'black', 0, 0),
+                'yes': new markOptions('Hecho', 'green', 0, 1),
+                'partial': new markOptions('En proceso', 'orange', 0, 0.5),
+                'no': new markOptions('Falla', 'red', 0, 0, 0),
+                'discard': new markOptions('No se aplica', 'gray', 0, null)
+            }));
+
+            // Esta función calcula la nota final
+            // Se puede indicar la nota máxima y número de decimales 
+            function calc_mark() {
+                const MAX_MARK = 10; // Nota máxima
+                const NUM_DEC = 2; // Número de decimales
+
+                // Calculamos el total de puntuación y 
+                // el número de preguntas de esa puntuación
+                let total_mark = 0;
+                let total_quest = 0;
+                for (let [opt, data] of OPTIONS) {
+                    if (data.mark !== null) {
+                        let value = +document.getElementById("td_" + opt).innerText;
+                        total_mark += value * data.mark;
+                        total_quest += value;
+                    }
+                }
+
+                // Colocamos la nota calculada
+                document.getElementById('td_mark').innerText =
+                    Math.round((total_mark / total_quest) * MAX_MARK * 10 ** NUM_DEC) / (10 ** NUM_DEC);
+
+            }
+
+
+            function build_content(name) {
+
+                if (!name) {
+                    alert("El nombre no puede estar vacío");
+                    return;
+                }
+
+                // Expresión regular para
+                const regex = /XXXXX/gi;
+
+                // Añadimos las opciones al select
+                let select = document.createElement('select');
+                for (let [opt, data] of OPTIONS) {
+                    let new_opt = new Option(data.title, opt);
+                    new_opt.style.color = data.color;
+                    select.options.add(new_opt);
+                }
+
+                // Construimos todas las preguntas
+                // Las pondremos en un fragmento para añadirlas
+                // al final todas a la vez
+                content = document.createDocumentFragment();
+                let last_opt = "";
+                let ol_number = 1;
+
+                for (let [title, questions] of QUESTIONS) {
+                    // Creamos el título de cada sección
+                    let tit = document.createElement("h2");
+                    tit.appendChild(document.createTextNode(title));
+                    content.appendChild(document.createElement("br"));
+                    content.appendChild(tit);
+
+                    // Creamos la lista de cada sección (recordamos
+                    // el último valor utilizado)
+                    let ol = document.createElement('ol');
+                    ol.start = ol_number;
+                    content.appendChild(ol);
+
+                    // Construimos la lista de preguntas
+                    for (quest of questions) {
+                        let li = document.createElement('li');
+
+                        // Clonamos el nodo del select (es el mismo para todo)
+                        // Utilizamos clonación profunda para coger también sus
+                        // opciones (deep = true)
+
+                        quest = quest.replace(regex, name);
+                        let new_select = select.cloneNode(true);
+                        new_select.id = "sel" + ol_number;
+                        let label = document.createElement('label');
+                        label.setAttribute("for", new_select.id);
+                        label.append(document.createTextNode(' ' + quest));
+
+                        // Almacenar el valor original del select al coger el foco 
+                        // (hay que descontar este valor al cambiar)
+                        new_select.onfocus = () => last_opt = new_select.value;
+
+                        // Al cambiar el select: 
+                        //   1) poner el color adecuado al elemento de la lista
+                        //   2) restar 1 al antiguo valor del select
+                        //   3) sumar 1 al nuevo valor del select
+                        //   4) almacenar el nuevo valor del select
+                        //   5) actualizar las notas
+                        new_select.onchange = () => {
+                            li.style.color = OPTIONS.get(new_select.value).color;
+                            document.getElementById("td_" + last_opt).innerText = +document.getElementById("td_" +
+                                last_opt).innerText - 1;
+                            document.getElementById("td_" + new_select.value).innerText = +document.getElementById(
+                                "td_" + new_select.value).innerText + 1;
+                            last_opt = new_select.value;
+                            calc_mark();
+                        };
+
+                        // Agregar el select y la etiqueta al elemento de la lista, y luego añadir este elemento
+                        li.appendChild(new_select);
+                        li.appendChild(label);
+                        ol.appendChild(li);
+                        ol_number++;
+                    }
+                }
+
+                // Empezar con todos los elementos sin especificar
+                OPTIONS.get('empty').number = ol_number - 1;
+
+                // Se borran los elementos previos
+                let old_content = document.getElementById('content');
+                while (old_content.firstChild) {
+                    old_content.removeChild(old_content.firstChild);
+                }
+                // Se añaden todos los datos
+                document.getElementById('content').appendChild(content);
+
+                // Generar o resetear las notas
+                if (!marks_shown) {
+                    // No hay notas, las generamos
+                    build_marks(OPTIONS);
+                    marks_shown = true;
+                }
+                else {
+                    // Hay notas, las reseamos
+                    reset_marks(OPTIONS);
+                }
+            }
+
+            // Resetear las notas
+            function reset_marks(OPTIONS) {
+
+                let table_stats = document.getElementById('table_stats');
+                for (let [opt, data] of OPTIONS) {
+                    document.getElementById("td_" + opt).innerText = OPTIONS.get(opt).number;
+                }
+                document.getElementById("td_mark").innerText = "0.00";
+                
+
+            }
+
+            // Generar las celdas de las notas e inicializarlas
+            function build_marks(OPTIONS) {
+                // Construimos la tabla de resultados
+                let table_stats = document.getElementById('table_stats');
+                
+                for (let [opt, data] of OPTIONS) {
+
+                    // Creamos el th para la cabecera, añadimos el título
+                    let th = document.createElement('th');
+                    th.appendChild(document.createTextNode(data.title));
+
+                    // Creamos el td para los datos, le añadimos id según tipo y el color
+                    let td = document.createElement('td');
+                    td.id = "td_" + opt;
+                    td.style.color = data.color;
+
+                    // Inicializamos el número y añadimos el th en la cabecera y el td en el cuerpo
+                    td.appendChild(document.createTextNode(OPTIONS.get(opt).number));
+                    // table >> thead >> tr
+                    table_stats.firstElementChild.firstElementChild.appendChild(th);
+                    // table >> thead -> tbody >> tr
+                    table_stats.firstElementChild.nextElementSibling.firstElementChild.appendChild(td);
+                }
+            }
+
+    </script>
+</body>
+
+</html>
